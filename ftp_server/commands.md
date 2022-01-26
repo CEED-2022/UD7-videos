@@ -1,5 +1,5 @@
-user
-pass
-cwd
-pasv
-list
+USER user
+PASS pass
+CWD
+PASV
+LIST
