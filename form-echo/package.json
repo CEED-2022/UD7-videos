@@ -1,0 +1,18 @@
+{
+  "name": "form-echo",
+  "version": "0.0.1",
+  "description": "Echoes the data received in a form",
+  "main": "index.mjs",
+  "type": "module",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "Alvaro Maceda <alvaro@alvaromaceda.es>",
+  "repository": "git@github.com:CEED-2021/UD8-videos.git",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  }
+}

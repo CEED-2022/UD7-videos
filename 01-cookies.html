@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <button id="button-1">Button 1</button>
+  <br><br>
+  <button id="button-2">Button 2</button>
+
+<script defer>
+  document.getElementById('button-1').addEventListener('click', button1)
+  document.getElementById('button-2').addEventListener('click', button2)
+
+  async function button1() {
+    const response = await fetch('http://localhost:3000/cookies',
+      {
+        credentials: 'include'
+      }
+    );
+    const data = await response.text();
+    console.log(data)
+  }
+
+  async function button2() {
+    try {
+      const response = await fetch('http://another.site.banana:3000/cookies',
+        {
+          credentials: 'same-origin'
+        }
+      );
+      const data = await response.text();
+      console.log(data)
+    }catch(error) {
+      console.log(error)
+    }
+  }
+
+</script>
+
+</body>
+</html>
