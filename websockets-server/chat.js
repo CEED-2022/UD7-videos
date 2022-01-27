@@ -1,17 +1,15 @@
 import express from 'express';
 import http from 'http';
-import WebSocket, { WebSocketServer } from 'ws';
+import { WebSocketServer } from 'ws';
 
-const port = 6969;
+const PORT = 8999;
 const server = http.createServer(express);
 const wss = new WebSocketServer({ server })
 
-function sendToOthers(ws, message, identify = true) {
+function sendToAll(ws, message, identify = true) {
   wss.clients.forEach(function each(client) {
-    if (client !== ws && client.readyState === WebSocket.OPEN) {
-      const identification = identify ?  clients.get(ws) + ': ' : ''
-      client.send(identification + message);
-    }
+    const identification = identify ?  clients.get(ws) + ': ' : ''
+    client.send(identification + message);
   })
 }
 
@@ -21,14 +19,14 @@ let counter = 0;
 wss.on('connection', function connection(ws) {
 
   clients.set(ws, 'Chatter ' + counter++)
-  sendToOthers(ws, 'Somebody just joined the conversation', false)
+  sendToAll(ws, 'Somebody just joined the conversation', false)
 
   ws.on('message', function incoming(data) {
     console.log(data.toString())
-    sendToOthers(ws, data.toString())
+    sendToAll(ws, data.toString())
   })
 })
 
-server.listen(port, function() {
-  console.log(`Server is listening on ${port}!`)
+server.listen(PORT, function() {
+  console.log(`Server is listening on ${PORT}!`)
 })

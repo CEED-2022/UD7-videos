@@ -4,9 +4,82 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Websocket examples</title>
+
+  <style>
+    #chat {
+      height: 200px;
+      overflow-y: auto;
+      border: 1px solid gray;
+      margin-bottom: 10px;
+    }
+    #message {
+      width: 90%;;
+    }
+
+    #send {
+      float: right;
+      width: 9%;
+    }
+
+  </style>
+
 </head>
 <body>
-  
+
+  <main>
+    <section>
+      <div id="chat">
+      </div>
+    </section>
+    <section id="text">
+      <input id="message" type="text">
+      <button id="send">Send</button>
+    </section>
+  </main>
+
+
+  <script defer>
+
+const chatLog = document.getElementById('chat');
+const message = document.getElementById('message');
+const send = document.getElementById('send');
+
+function addMessage(message) {
+  chatLog.innerHTML += `<br>${message}`
+  chatLog.scrollTop = chatLog.scrollHeight;
+}
+
+let chat;
+
+function openChat() {
+  chat = new WebSocket("ws://localhost:8999");
+  chat.addEventListener('open', function (event) {
+    addMessage('Chat opened');
+  });
+  chat.addEventListener('message', function (event) {
+    addMessage(event.data);
+  });
+}
+
+function sendMessage() {
+  chat.send(message.value)
+  message.value = '';
+  message.focus();
+}
+
+function enter(event) {
+  if(event.key === 'Enter') {
+      sendMessage();
+  }
+}
+
+send.addEventListener('click', sendMessage);
+message.addEventListener('keydown', enter);
+
+openChat();
+
+  </script>
+
 </body>
 </html>
