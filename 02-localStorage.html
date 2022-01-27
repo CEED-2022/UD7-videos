@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>localStorage</title>
+</head>
+<body>
+
+<script defer>
+
+  window.addEventListener('storage', function(e) {
+    console.log(e.key, e.oldValue, e.newValue)
+    if(e.key == 'color') document.getElementsByTagName('body')[0].style.background = e.newValue;
+  });
+
+</script>
+
+</body>
+</html>
