@@ -46,6 +46,14 @@ app.get('/cookies', (req, res) => {
   res.send(foo)
 })
 
+app.get('/redirect', (req, res) => {
+  res.redirect(307, '/redirected')
+})
+
+app.get('/redirected', (req, res) => {
+  res.send('Welcome home Kanga')
+})
+
 app.listen(PORT, () => {
   console.log(`App listenig at port ${PORT}`)
 })
