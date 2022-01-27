@@ -14,29 +14,37 @@ app.use(express.json());
 app.use(express.urlencoded());
 app.use(cookieParser());
 
+const origins = [
+  'http://localhost:9090',
+  'http://localhost:8080',
+];
+const dynamicCORS =  function (origin, callback) {
+  if (!origin) return callback(null, true);
+
+  if (origins.indexOf(origin) === -1) {
+    var msg = `This site ${origin} does not have an access. Only specific domains are allowed to access it.`;
+    return callback(new Error(msg), false);
+  }
+  return callback(null, origin);
+}
 const corsOptions = {
-  origin: [
-    'http://localhost:9090'
-  ],
-  credentials: true,
+  origin: dynamicCORS,
+  credentials: true
 }
 app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)) // include before other routes
 
 app.all('/', (req, res) => {
   res.send(echoFields(req))
 })
 
-app.all('/cookies', (req, res) => {
-  // res.cookie(cookie_name , 'cookie_value').send('Cookie is set');
-  console.log(req.cookies)
-  // console.log(req)
+app.get('/cookies', (req, res) => {
   const foo = `
     hostname: ${req.hostname}
     cookies: ${JSON.stringify(req.cookies)}
   `
   res.send(foo)
 })
-
 
 app.listen(PORT, () => {
   console.log(`App listenig at port ${PORT}`)
