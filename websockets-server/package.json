@@ -4,6 +4,10 @@
   "main": "index.js",
   "license": "MIT",
   "type": "module",
+  "scripts": {
+    "ping": "node ping.js",
+    "chat": "node chat.js"
+  },
   "dependencies": {
     "express": "^4.17.2",
     "ws": "^8.4.2"
