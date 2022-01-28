@@ -61,10 +61,10 @@ function openWS() {
   })
 }
 
-// To emulate delay in linux machines:
-// sudo tc qdisc add dev eth1 root handle 1: prio priomap 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0
-// sudo tc qdisc add dev eth1 parent 1:2 handle 20: netem delay 3000ms
-// sudo tc filter add dev eth1 parent 1:0 protocol ip u32 match ip dport 8999 0xffff flowid 1:2
+// To emulate delay in linux machines for localhost:
+// sudo tc qdisc add dev lo root netem delay 3000ms
+// To remove delay:
+// sudo tc qdisc del dev lo root
 
 async function openChat() {
 
@@ -97,9 +97,7 @@ async function openChat() {
   }
 }
 
-
 open.addEventListener('click', openChat);
-
 
   </script>
 

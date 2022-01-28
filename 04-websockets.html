@@ -12,6 +12,7 @@
       overflow-y: auto;
       border: 1px solid gray;
       margin-bottom: 10px;
+      margin-top: 10px;
     }
     #message {
       width: 90%;;
@@ -28,6 +29,7 @@
 <body>
 
   <main>
+    <button id="open">Open chat</button>
     <section>
       <div id="chat">
       </div>
@@ -44,6 +46,7 @@
 const chatLog = document.getElementById('chat');
 const message = document.getElementById('message');
 const send = document.getElementById('send');
+const open = document.getElementById('open');
 
 function addMessage(message) {
   chatLog.innerHTML += `<br>${message}`
@@ -61,6 +64,8 @@ function openChat() {
   chat.addEventListener('message', function (event) {
     addMessage(event.data);
   });
+  send.addEventListener('click', sendMessage);
+  message.addEventListener('keydown', enter);
 }
 
 function sendMessage() {
@@ -75,10 +80,7 @@ function enter(event) {
   }
 }
 
-send.addEventListener('click', sendMessage);
-message.addEventListener('keydown', enter);
-
-openChat();
+open.addEventListener('click', openChat);
 
   </script>
 
