@@ -38,11 +38,20 @@ app.all('/', (req, res) => {
   res.send(echoFields(req))
 })
 
+let counter = 0;
+function newClient() {
+  return 'Client ' + counter++;
+}
+
 app.get('/cookies', (req, res) => {
+  const client = req.cookies.client;
+  console.log(`Client: ${client}`)
   const foo = `
+    client: ${client || 'New connection'}
     hostname: ${req.hostname}
     cookies: ${JSON.stringify(req.cookies)}
   `
+  if(!client) res.cookie('client' , newClient());
   res.send(foo)
 })
 
