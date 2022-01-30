@@ -1,4 +1,5 @@
 # Dependency directories
 node_modules/
+ssl/
 .vscode/
 yarn-error.log

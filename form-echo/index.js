@@ -51,7 +51,7 @@ app.get('/cookies', (req, res) => {
     hostname: ${req.hostname}
     cookies: ${JSON.stringify(req.cookies)}
   `
-  if(!client) res.cookie('client' , newClient());
+  if(!client) res.cookie('client' , newClient(), { sameSite: 'none', secure: true });
   res.send(foo)
 })
 
