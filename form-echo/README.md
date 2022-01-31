@@ -21,6 +21,9 @@ You must add the certificate for your browser
 
 ### Generate cerficates:
 From https://gist.github.com/cecilemuller/9492b848eb8fe46d462abeb26656c4f8:
+
+This must be done once.
+
 1) Change to directory ssl.
 2) Generate root CA (once:)
 ```
@@ -32,7 +35,9 @@ openssl x509 -outform pem -in DevelopmentRootCA.pem -out DevelopmentRootCA.crt
 openssl req -new -nodes -newkey rsa:2048 -keyout localhost.key -out localhost.csr -subj "/C=US/ST=YourState/L=YourCity/O=Example-Certificates/CN=localhost.local"
 openssl x509 -req -sha256 -days 1024 -in localhost.csr -CA DevelopmentRootCA.pem -CAkey DevelopmentRootCA.key -CAcreateserial -extfile ../domains.ext -out localhost.crt
 ```
-4) Launch proxy from main directory:
+4) Add root CA to your browser
+
+After that, you can launch ssl proxy from main directory:
 `local-ssl-proxy --source 3030 --target 3000 --key ./ssl/localhost.key --cert ./ssl/localhost.crt`
 
 Application will be available on port 3030
