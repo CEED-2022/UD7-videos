@@ -5,11 +5,14 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "ping": "node ping.js",
-    "chat": "node chat.js"
+    "ping": "nodemon ping.js",
+    "chat": "nodemon chat.js"
   },
   "dependencies": {
     "express": "^4.17.2",
     "ws": "^8.4.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
   }
 }
