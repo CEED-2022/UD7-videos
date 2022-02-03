@@ -1,5 +1,5 @@
 import sinon from 'sinon';
-import fetch from 'node-fetch'
+import * as fetchModule from 'node-fetch'
 
 import {
   productDetails,
@@ -19,7 +19,6 @@ function jsonOk(body) {
     }
   )
 }
-
 
 describe('sinon stubs', () => {
 
@@ -53,11 +52,16 @@ describe('sinon stubs', () => {
 
   describe('when working with modules', () => {
 
-    it('can stub a module function', () => {
-      let stub = sinon.stub('fetch'); //add stub
-      stub.onCall(0).returns(jsonOk({banana}));
+    it('can stub a module function', async () => {
+      const stub = sinon.stub(fetchModule, 'default')
+      stub.onCall(0).returns(jsonOk({banana: 3}));
 
-      fetchProductInfo(3)
+      const result = await fetchProductInfo(3);
+      console.log(result)
+    });
+
+    it('can stub different calls', () => {
+      // HERE: A SERVER WITH MULTIPLE CALLS
     });
   });
 
