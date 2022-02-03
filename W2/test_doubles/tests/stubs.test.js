@@ -10,15 +10,13 @@ import {
 
 
 function jsonOk(body) {
-  return Promise.resolve(
-    {
-      status: 200,
-      headers: {
-        'Content-type': 'application/json'
-      },
-      json: () => body
-    }
-  )
+  return {
+    status: 200,
+    headers: {
+      'Content-type': 'application/json'
+    },
+    json: () => body
+  }
 }
 
 describe('sinon stubs', () => {
@@ -68,9 +66,9 @@ describe('sinon stubs', () => {
     it('can stub different calls', async () => {
       const stub = sinon.stub(fetchModule, 'default')
 
-      stub.withArgs('http://banana.com/1').returns(jsonOk({product: 'product1'}));
-      stub.withArgs('http://banana.com/2').returns(jsonOk({product: 'product2'}));
-      stub.withArgs('http://banana.com/3').returns(jsonOk({product: 'product3'}));
+      stub.withArgs('http://banana.com/1').resolves(jsonOk({product: 'product1'}));
+      stub.withArgs('http://banana.com/2').resolves(jsonOk({product: 'product2'}));
+      stub.withArgs('http://banana.com/3').resolves(jsonOk({product: 'product3'}));
 
       const products = [
         await fetchProductInfo(1),
@@ -99,5 +97,5 @@ describe('sinon stubs', () => {
       ])
     });
   });
-  
+
 });
