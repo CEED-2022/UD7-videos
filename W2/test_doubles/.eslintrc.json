@@ -11,7 +11,7 @@
       "sourceType": "module"
   },
   "ignorePatterns": ["**/dist/*"],
-  "noInlineConfig": true,
+  "noInlineConfig": false,
   "reportUnusedDisableDirectives": true,
   // You can check the rules here: https://eslint.org/docs/rules/
   // If eslint is complaining about a rule not enumerated here, you can ignore it.
