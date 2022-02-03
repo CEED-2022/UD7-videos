@@ -9,6 +9,7 @@ function multipleProductDetails(ids, productRepository){
 }
 
 async function fetchProductInfo(id) {
+  console.log('calling '+`http://banana.com/${id}`)
   return await (await fetch(`http://banana.com/${id}`)).json()
 }
 

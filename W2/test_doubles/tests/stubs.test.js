@@ -1,5 +1,6 @@
 import sinon from 'sinon';
 import * as fetchModule from 'node-fetch'
+import fakeServer from './fake_server.js';
 
 import {
   productDetails,
@@ -21,6 +22,10 @@ function jsonOk(body) {
 }
 
 describe('sinon stubs', () => {
+
+  afterEach(() => {
+    sinon.restore();
+  })
 
   it('creates an stub', () => {
     const product = { description: "whatever", price: 1234 }
@@ -60,9 +65,39 @@ describe('sinon stubs', () => {
       console.log(result)
     });
 
-    it('can stub different calls', () => {
-      // HERE: A SERVER WITH MULTIPLE CALLS
+    it('can stub different calls', async () => {
+      const stub = sinon.stub(fetchModule, 'default')
+
+      stub.withArgs('http://banana.com/1').returns(jsonOk({product: 'product1'}));
+      stub.withArgs('http://banana.com/2').returns(jsonOk({product: 'product2'}));
+      stub.withArgs('http://banana.com/3').returns(jsonOk({product: 'product3'}));
+
+      const products = [
+        await fetchProductInfo(1),
+        await fetchProductInfo(2),
+        await fetchProductInfo(3)
+      ]
+      expect(products).toEqual([
+        {product: 'product1'},
+        {product: 'product2'},
+        {product: 'product3'}
+      ])
+    });
+
+    it('you can extract it to a module', async () => {
+      fakeServer();
+
+      const products = [
+        await fetchProductInfo(1),
+        await fetchProductInfo(2),
+        await fetchProductInfo(3)
+      ]
+      expect(products).toEqual([
+        {product: 'product1'},
+        {product: 'product2'},
+        {product: 'product3'}
+      ])
     });
   });
-
+  
 });
