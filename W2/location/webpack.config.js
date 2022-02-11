@@ -6,6 +6,8 @@ module.exports = {
     mode: "development",
     entry: {
       index: path.resolve(__dirname, "src", "index.js"),
+      page2: path.resolve(__dirname, "src", "page2.js"),
+      page3: path.resolve(__dirname, "src", "page3.js"),
     },
     output: {
       path: path.resolve(__dirname, "dist")
@@ -33,7 +35,17 @@ module.exports = {
       new HtmlWebpackPlugin({
         filename: 'index.html',
         template: path.resolve(__dirname, "src", "index.html"),
-        // chunks: ['page1', 'common']
+        chunks: ['index']
+      }),
+      new HtmlWebpackPlugin({
+        filename: 'page2.html',
+        template: path.resolve(__dirname, "src", "page2.html"),
+        chunks: ['page2']
+      }),
+      new HtmlWebpackPlugin({
+        filename: 'page3.html',
+        template: path.resolve(__dirname, "src", "page3.html"),
+        chunks: ['page3']
       }),
       new MiniCssExtractPlugin()
     ],
